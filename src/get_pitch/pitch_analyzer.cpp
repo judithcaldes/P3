@@ -15,12 +15,15 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
-      for (unsigned int n = 0; n < x.size(); ++n {
+      for (unsigned int n = 0; n < x.size()-l; ++n) {
           r[l]+=x[n]*x[n-l];
+      }
+      r[l] = r[l]/x.size();
     }
-r[l] = r[l]/x.size();
-    if (r[0] == 0.0F) //to avoid log() and divide zero 
+
+    if (r[0] == 0.0F){ //to avoid log() and divide zero 
       r[0] = 1e-10; 
+    }
   }
 
   void PitchAnalyzer::set_window(Window win_type) {
@@ -55,7 +58,14 @@ r[l] = r[l]/x.size();
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    return true;
+
+    //Buscamos que valores se suelen tomar cuando se trata de sonidos sonoros (valores altos)
+    //primero normalizar la señal y después mirar que valores que hemos de poner
+    if(pot>this->u_pot && r1norm>this->u_r1 && rmaxnorm>this->u_max){ 
+      return false;
+    }else{
+      return true;
+    }
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
@@ -80,6 +90,12 @@ r[l] = r[l]/x.size();
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
+
+  for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
+    if(*iR >*iRMax){
+      iRMax = iR;
+    }
+  }
 
     unsigned int lag = iRMax - r.begin();
 
