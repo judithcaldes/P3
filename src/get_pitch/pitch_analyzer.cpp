@@ -14,7 +14,7 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
-      for (unsigned int n = 0; n < x.size(); ++n {
+      for (unsigned int n = 0; n < x.size()-l; ++n) {
           r[l]+=x[n]*x[n-l];
     }
 r[l] = r[l]/x.size();
@@ -54,6 +54,13 @@ r[l] = r[l]/x.size();
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
+
+  if(pot>-45 && r1norm>0.7 && maxnorm>0.7){
+      return false;
+  }else{
+    return true;
+  }
+
     return true;
   }
 
