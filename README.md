@@ -180,6 +180,39 @@ Ejercicios de ampliación
   Entre las posibles mejoras, puede escoger una o más de las siguientes:
 
   * Técnicas de preprocesado: filtrado paso bajo, diezmado, *center clipping*, etc.
+Hemos utilizado la técnica de Center Clipping utilizando como referencia la siguiente web: http://notedetection.weebly.com/center-clipping.html
+```bash
+  /// \TODO
+  /// Preprocess the input signal in order to ease pitch estimation. For
+  /// instance, central-clipping or low pass filtering may be used.
+  /// \DONE Hemos utilizado Center-Cliping
+
+  // Iterate for each frame and save values in f0 vector
+
+  vector<float>::iterator iX;
+  vector<float> f0;
+
+  float valor_max = *std::max_element(x.begin(), x.end()); //devuelve el valor de la amplitud máxima de la senyal de audio
+  float alpha = 0.03 * valor_max; //fijamos un valor de alpha a partir del valor máximo del audio
+
+  for (iX = x.begin(); iX < x.end(); iX++){ //Por cada trama iX se hace lo siguiente
+    if(abs(*iX) < alpha){
+      *iX = 0;
+    }
+    if(*iX > alpha){
+      *iX = *iX - alpha;
+    }
+    if(*iX < -alpha){
+      *iX = *iX + alpha;
+    }
+  }
+
+  for (iX = x.begin(); iX + n_len < x.end(); iX = iX + n_shift) {
+    float f = analyzer(iX, iX + n_len);
+    f0.push_back(f);
+  }
+  ```
+  
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
