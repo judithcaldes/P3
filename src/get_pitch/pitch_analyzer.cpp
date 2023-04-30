@@ -71,7 +71,7 @@ namespace upc {
     /// - El valor máximo de la autocorrelación supera nuestro umbral máximo
     /// Si alguna de estas condiciones falla se trata de un sonido sordo
     
-    if((pot > this->u_pot || r1norm > this->u_r1 ) && rmaxnorm > this->u_max){ 
+    if(pot > this->u_pot && r1norm > this->u_r1 && rmaxnorm > this->u_max){ 
       return false; //sonoro
     }else{
       return true; //sordo
