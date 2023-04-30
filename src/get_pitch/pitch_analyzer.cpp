@@ -15,6 +15,11 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
+      /// \DONE Autocorrelación calculada
+      /// - Inicializamos la autocorrelación a 0
+      /// - Acumulamos los productos cruzados \f$\sum_{n=0}^{N-l} x[n]x[n+l]\f$
+      /// - Dividimos por el numero de muestras
+
       for (unsigned int n = 0; n < x.size()-l; ++n) {
           r[l]+=x[n]*x[n+l];
       }
@@ -59,12 +64,17 @@ namespace upc {
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
 
-    //Buscamos que valores se suelen tomar cuando se trata de sonidos sonoros (valores altos)
-    //primero normalizar la señal y después mirar que valores que hemos de poner
-    if(pot>this->u_pot && r1norm>this->u_r1 && rmaxnorm>this->u_max){ 
-      return false;
+    /// \DONE 
+    /// Si se cumplen las 3 condiciones siguientes, se trata de un sonido sonoro:
+    /// - La potencia es superior a nuestro umbral
+    /// - El primer valor de la autocorrelación es superior a nuestro umbral
+    /// - El valor máximo de la autocorrelación supera nuestro umbral máximo
+    /// Si alguna de estas condiciones falla se trata de un sonido sordo
+    
+    if((pot > this->u_pot || r1norm > this->u_r1 ) && rmaxnorm > this->u_max){ 
+      return false; //sonoro
     }else{
-      return true;
+      return true; //sordo
     }
   }
 
@@ -90,6 +100,7 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
+/// \DONE localizando el primer máximo secundario de la autocorrelación
 
   for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
     if(*iR >*iRMax){

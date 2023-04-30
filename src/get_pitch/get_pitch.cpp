@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 #include <string.h>
+#include <algorithm> // Incluimos la biblioteca para usar la función std::sort
+#include <cmath>
 
 #include "pitch_analyzer.h"
 #include "wavfile_mono.h"
@@ -27,6 +29,7 @@ Usage:
 Options:
     -h, --help  Show this screen
     --version   Show the version of the project
+
     -p, --u_pot=REAL   Umbral de potencia para la determinación de sonoro/sordo [default: -1e6]
     -1, --u_r1=REAL    Umbral de la autocorrelación de 1 para la determinación de sonoro/sordo [default: 0.7]
     -m, --u_rmax=REAL  Umbral en el máximo de la autocorrelación para la determinación de sonoro/sordo [default: 0.4]
@@ -42,6 +45,7 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   ///  Modify the program syntax and the call to **docopt()** in order to
   ///  add options and arguments to the program.
+  /// \DONE Hemos añadido u_pot, u_r1 y u_rmax
   std::map<std::string, docopt::value> args = docopt::docopt(
       USAGE,
       {argv + 1, argv + argc}, // array of arguments, without the program name
@@ -59,8 +63,6 @@ int main(int argc, const char *argv[]) {
   float u_rmax = stof(args["--u_rmax"].asString());
  
 
-  // pero no modificamos docopt no? es solo añadir argumentso
-
   // Class template std::function is a general-purpose polymorphic function
   // wrapper. Instances of std::function can store, copy, and invoke any
   // CopyConstructible Callable target -- functions (via pointers thereto),
@@ -72,18 +74,10 @@ int main(int argc, const char *argv[]) {
   // that of a standard container of bytes, but adding features specifically
   // designed to operate with strings of single-byte characters.
 
-  // float maxnorm = std::stof(args["--maxnorm"].asString());
-  // float minZCR = std::stof(args["--minZCR"].asString());
-  // float norm = std::stof(args["--norm"].asString());
-  // float maxpot = std::stof(args["--maxpot"].asString());
-  // float alfa = std::stof(args["--alfa"].asString());
-  // float umbral1 = std::stof(args["--umbral1"].asString());
-  // float umbral2 = std::stof(args["--umbral2"].asString());
-
   // Read input sound file
 
-  unsigned int rate;
-  vector<float> x;
+  unsigned int rate; //frecuencia de muestreo
+  vector<float> x; //señal de audio
   if (readwav_mono(input_wav, rate, x) != 0) {
     cerr << "Error reading input file " << input_wav << " (" << strerror(errno)
          << ")\n";
@@ -99,21 +93,27 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For
   /// instance, central-clipping or low pass filtering may be used.
+  /// \DONE Hemos utilizado Center-Cliping
 
   // Iterate for each frame and save values in f0 vector
 
   vector<float>::iterator iX;
   vector<float> f0;
 
-  // float f=0.0;
+  float valor_max = *std::max_element(x.begin(), x.end()); //devuelve el valor de la amplitud máxima de la senyal de audio
+  float alpha = 0.03 * valor_max; //fijamos un valor de alpha a partir del valor máximo del audio
 
-  // for (iX = x.begin(); iX < x.end(); iX++) {
-
-  //   if (*iX<alfa && * iX> - alfa) {
-  //     *iX = 0.0;
-  //   }
-  //   // printf("%f ",*iX);
-  // }
+  for (iX = x.begin(); iX < x.end(); iX++){ //Por cada trama iX se hace lo siguiente
+    if(abs(*iX) < alpha){
+      *iX = 0;
+    }
+    if(*iX > alpha){
+      *iX = *iX - alpha;
+    }
+    if(*iX < -alpha){
+      *iX = *iX + alpha;
+    }
+  }
 
   for (iX = x.begin(); iX + n_len < x.end(); iX = iX + n_shift) {
     float f = analyzer(iX, iX + n_len);
@@ -123,88 +123,39 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a
   /// median filter or time-warping may be used.
+  /// \DONE Hemos utilizado el filtro de mediana
 
-  // float avgPitch = 0;
-  // int numMuestras = 0;
+  // Definimos el tamaño de la ventana de filtrado
+  const int MEDIAN_WINDOW = 6; //Utilizamos 6 pero habrán 7 números dentro de la ventana
 
-  //     // FILTROS DIVERSOS que quitan cambios esporádicos de una sola muestra:
+  // Creamos un vector temporal para almacenar los valores filtrados
+  vector<float> f0_filtered(f0.size());
 
-  //     vector<float>::iterator iF0; // creamos iterador de floats
+  // Aplicamos el filtro de mediana a cada valor de f0
+  for (long unsigned int i = 0; i < f0.size(); i++) {
+    // Creamos un vector temporal con los valores a filtrar
+    vector<float> window;
 
-  // for (iF0 = f0.begin(); iF0 < f0.end();
-  //      iF0++) { // hacemos for de principio a fin
+    // Agregamos los valores a la ventana
+    for (long unsigned int j = i - MEDIAN_WINDOW/2; j <= i + MEDIAN_WINDOW/2; j++) {
+      // Ignoramos los valores fuera del rango del vector
+      if (j < 0 || j >= f0.size()) {
+        continue;
+      }
 
-  //   if (*iF0 != 0.0) {
-  //     // a la que el iterador es distinto de 0
-  //     avgPitch += *iF0; // le sumamos el valor obtenido
-  //     numMuestras++; // y mantenemos cuenta del num de muestras para luego hacer
-  //                    // la media
-
-  //     if (iF0 == f0.begin()) {   // si estamos en el inicio
-  //       if (*(iF0 + 1) == 0.0) { // y la siguiente muestra vale 0
-  //         *iF0 = 0.0;            // la actual vale 0 tmb
-  //       }
-  //     } else if (iF0 == f0.end() - 1) { // si estamos en la penúltima muestra
-  //       if (*(iF0 - 1) == 0.0) {        // y la anterior vale 0
-  //         *iF0 = 0.0;                   // la penúltima (la actual) vale 0
-  //       }
-  //     } else {
-  //       // si la anterior y la siguiente valen 0:
-  //       if (*(iF0 - 1) == 0.0 && *(iF0 + 1) == 0.0) {
-  //         // la acutal vale 0 también:
-  //         *iF0 = 0.0;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // // filtro para ignorar los ceros esporádicos (que estén solos)
-
-  // for (iF0 = f0.begin(); iF0 < f0.end();
-  //      iF0++) {                  // recorremos todas las muestras
-  //   if (*iF0 == 0.0) {           // si algun valor es 0
-  //     if (iF0 == f0.begin()) {   // y es la muestra inicial
-  //       if (*(iF0 + 1) != 0.0) { // si la siguiente es distinca de 0
-  //         *iF0 = *(iF0 + 1);     // el valor de la actual pasa a ser el de la
-  //                                // siguiente: ignoramos los 0
-  //       }
-  //     } else if (iF0 == f0.end() - 1) { // si estamos en la penúltima
-  //       if (*(iF0 - 1) != 0.0) {        // si la anterior es distinta de 0
-  //         *iF0 =
-  //             *(iF0 - 1); // el valor de la actual pasa a ser el de la anterior
-  //       }
-  //     } else {
-  //       if (*(iF0 - 1) != 0.0 &&
-  //           *(iF0 + 1) !=
-  //               0.0) { // si la anterior y la siguiente son distintos de 0
-  //         *iF0 = (*(iF0 - 1) + *(iF0 + 1)) /
-  //                2; // el valor de la actual es la media entre ambos
-  //       }
-  //     }
-  //   }
-  // }
-
-  // // ahora quitamos 0 de dos en dos
-  // for (iF0 = f0.begin(); iF0 < f0.end() - 3; iF0++) {
-  //   // si la actual es distinta de 0 y las dos siguentes valen 0, y la 3a vuelve
-  //   // a ser distinta de 0:
-  //   if (*iF0 != 0.0 && *(iF0 + 1) == 0.0 && *(iF0 + 2) == 0.0 &&
-  //       *(iF0 + 3) != 0.0) {
-  //     // las dos intermedias que valían 0 pasan a valer la media enre la actual
-  //     // y la 3a
-  //     *(iF0 + 1) = (*(iF0) + *(iF0 + 3)) / 2;
-  //     *(iF0 + 2) = *(iF0 + 1);
-  //   }
-  // }
-
-  // avgPitch = avgPitch / numMuestras;
-
-  // for (iF0 = f0.begin(); iF0 < f0.end(); iF0++) {
-  //   if (*iF0 >= avgPitch * umbral1) {
-  //     *iF0 = avgPitch * umbral2;
-  //   }
-  // }
+      // Agregamos el valor a la ventana
+      window.push_back(f0[j]);
+    }
   
+    // Ordenamos la ventana
+    std::sort(window.begin(), window.end());
+
+    // Tomamos el valor central de la ventana como valor filtrado
+    f0_filtered[i] = window[round(window.size()/2)];
+  }
+
+  // Sobrescribimos el vector original con los valores filtrados
+  f0 = f0_filtered;
 
   // Write f0 contour into the output file
   ofstream os(output_txt);
