@@ -46,6 +46,37 @@ Ejercicios básicos
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
+Grabamos un tono sonoro de 30 ms con wavesurfer:
+![image](https://user-images.githubusercontent.com/125259801/235346150-92e7d737-6fb8-4d39-b416-1f9c46eb00e4.png)
+
+Para crear las gráficas escribimos el siguiente código de MATLAB:
+```bash
+%Gráficas
+[audio,Fs] = audioread('fonema_sonoro.wav');
+t = seconds(0:1/Fs:(size(audio,1)-1)/Fs);
+
+audio(:,2) = [];
+
+subplot(2,1,1);
+plot(t,audio)
+title('30ms de un fonema sonoro')
+xlabel("Time")
+ylabel("Amplitude")
+%xlim("tight")
+%ylim([-1 1])
+
+
+r = xcorr(audio,audio);
+subplot(2,1,2); 
+plot(r)
+title('Autocorrelación ')
+xlabel("Time")
+ylabel("Amplitude")
+```
+
+Los resultados son los siguientes:
+![image](https://user-images.githubusercontent.com/125259801/235346815-0751ff1d-83d5-4f24-bcaf-d3d9697af9f5.png)
+
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
 
