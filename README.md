@@ -214,6 +214,46 @@ Hemos utilizado la técnica de Center Clipping utilizando como referencia la sig
   ```
   
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
+Hemos utilizado el filtro de mediana:
+```bash
+  /// \TODO
+  /// Postprocess the estimation in order to supress errors. For instance, a
+  /// median filter or time-warping may be used.
+  /// \DONE Hemos utilizado el filtro de mediana
+
+  // Definimos el tamaño de la ventana de filtrado
+  const int MEDIAN_WINDOW = 6; //Utilizamos 6 pero habrán 7 números dentro de la ventana
+
+  // Creamos un vector temporal para almacenar los valores filtrados
+  vector<float> f0_filtered(f0.size());
+
+  // Aplicamos el filtro de mediana a cada valor de f0
+  for (int i = 0; i < f0.size(); i++) {
+    // Creamos un vector temporal con los valores a filtrar
+    vector<float> window;
+
+    // Agregamos los valores a la ventana
+    for (int j = i - MEDIAN_WINDOW/2; j <= i + MEDIAN_WINDOW/2; j++) {
+      // Ignoramos los valores fuera del rango del vector
+      if (j < 0 || j >= f0.size()) {
+        continue;
+      }
+
+      // Agregamos el valor a la ventana
+      window.push_back(f0[j]);
+    }
+  
+    // Ordenamos la ventana
+    std::sort(window.begin(), window.end());
+
+    // Tomamos el valor central de la ventana como valor filtrado
+    f0_filtered[i] = window[round(window.size()/2)];
+  }
+
+  // Sobrescribimos el vector original con los valores filtrados
+  f0 = f0_filtered;
+  ```
+  
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
   * Optimización **demostrable** de los parámetros que gobiernan el estimador, en concreto, de los que
