@@ -79,9 +79,52 @@ Los resultados son los siguientes:
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+```bash
+    //Compute correlation
+    autocorrelation(x, r);
+
+    vector<float>::const_iterator iR = r.begin(), iRMax = iR;
+
+    /// \TODO 
+	/// Find the lag of the maximum value of the autocorrelation away from the origin.<br>
+	/// Choices to set the minimum value of the lag are:
+	///    - The first negative value of the autocorrelation.
+	///    - The lag corresponding to the maximum value of the pitch.
+    ///	   .
+	/// In either case, the lag should not exceed that of the minimum value of the pitch.
+/// \DONE localizando el primer máximo secundario de la autocorrelación
+
+  for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
+    if(*iR >*iRMax){
+      iRMax = iR;
+    }
+  }
+
+    unsigned int lag = iRMax - r.begin();
+```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+```bash
+bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
+    /// \TODO Implement a rule to decide whether the sound is voiced or not.
+    /// * You can use the standard features (pot, r1norm, rmaxnorm),
+    ///   or compute and use other ones.
 
+    /// \DONE 
+    /// Si se cumplen las 3 condiciones siguientes, se trata de un sonido sonoro:
+    /// - La potencia es superior a nuestro umbral
+    /// - El primer valor de la autocorrelación es superior a nuestro umbral
+    /// - El valor máximo de la autocorrelación supera nuestro umbral máximo
+    /// Si alguna de estas condiciones falla se trata de un sonido sordo
+    
+    if(pot > this->u_pot && r1norm > this->u_r1 && rmaxnorm > this->u_max){ 
+      return false; //sonoro
+    }else{
+      return true; //sordo
+    }
+  }
+  ```
+  
    * Puede serle útil seguir las instrucciones contenidas en el documento adjunto `código.pdf`.
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del estimador de pitch. El 
