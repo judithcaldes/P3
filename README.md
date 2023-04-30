@@ -180,6 +180,7 @@ Ejercicios de ampliación
   Entre las posibles mejoras, puede escoger una o más de las siguientes:
 
   * Técnicas de preprocesado: filtrado paso bajo, diezmado, *center clipping*, etc.
+  
 Hemos utilizado la técnica de Center Clipping utilizando como referencia la siguiente web: http://notedetection.weebly.com/center-clipping.html
 ```bash
   /// \TODO
@@ -214,6 +215,7 @@ Hemos utilizado la técnica de Center Clipping utilizando como referencia la sig
   ```
   
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
+  
 Hemos utilizado el filtro de mediana:
 ```bash
   /// \TODO
