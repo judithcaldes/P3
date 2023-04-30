@@ -47,12 +47,12 @@ Ejercicios básicos
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
 Grabamos un tono sonoro de 30 ms con wavesurfer:
-![image](https://user-images.githubusercontent.com/125259801/235346150-92e7d737-6fb8-4d39-b416-1f9c46eb00e4.png)
+![image](https://user-images.githubusercontent.com/125259801/235349037-bcd040ae-12f2-4125-b6d9-78f0be219ca2.png)
 
 Para crear las gráficas escribimos el siguiente código de MATLAB:
 ```bash
 %Gráficas
-[audio,Fs] = audioread('fonema_sonoro.wav');
+[audio,Fs] = audioread('fonema_sonoro_30ms.wav');
 t = seconds(0:1/Fs:(size(audio,1)-1)/Fs);
 
 audio(:,2) = [];
@@ -67,15 +67,22 @@ ylabel("Amplitude")
 
 
 r = xcorr(audio,audio);
+a=length(r)+1;
+r_0=zeros(a/2,1);
+
+for i=1:a/2
+    r_0(i,1) = r(a/2+i-1,1);
+end
+
 subplot(2,1,2); 
-plot(r)
+plot(r_0)
 title('Autocorrelación ')
 xlabel("Time")
 ylabel("Amplitude")
 ```
 
 Los resultados son los siguientes:
-![image](https://user-images.githubusercontent.com/125259801/235346815-0751ff1d-83d5-4f24-bcaf-d3d9697af9f5.png)
+![image](https://user-images.githubusercontent.com/125259801/235349024-1f0e72d7-95e4-49e7-91ff-bba90a836b0a.png)
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
