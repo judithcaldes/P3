@@ -30,9 +30,9 @@ Options:
     -h, --help  Show this screen
     --version   Show the version of the project
 
-    -p, --u_pot=REAL   Umbral de potencia para la determinación de sonoro/sordo [default: -1e6]
-    -1, --u_r1=REAL    Umbral de la autocorrelación de 1 para la determinación de sonoro/sordo [default: 0.7]
-    -m, --u_rmax=REAL  Umbral en el máximo de la autocorrelación para la determinación de sonoro/sordo [default: 0.4]
+    -p, --u_pot=REAL   Umbral de potencia para la determinación de sonoro/sordo [default: 40]
+    -1, --u_r1=REAL    Umbral de la autocorrelación de 1 para la determinación de sonoro/sordo [default: 0.99]
+    -m, --u_rmax=REAL  Umbral en el máximo de la autocorrelación para la determinación de sonoro/sordo [default: 0.45]
 
 Arguments:
     input-wav   Wave file with the audio signal
