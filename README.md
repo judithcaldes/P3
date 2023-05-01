@@ -22,7 +22,7 @@ Ejercicios básicos
     //cálculo de la autocorrelación
 
     for (unsigned int l = 0; l < r.size(); ++l) {
-  		/// \TODO Compute the autocorrelation r[l]
+      /// \TODO Compute the autocorrelation r[l]
       /// \DONE Autocorrelación calculada
       /// - Inicializamos la autocorrelación a 0
       /// - Acumulamos los productos cruzados \f$\sum_{n=0}^{N-l} x[n]x[n+l]\f$
@@ -86,6 +86,7 @@ ylabel("Amplitude")
 ```
 
 Los resultados son los siguientes:
+
 ![image](https://user-images.githubusercontent.com/125259801/235349024-1f0e72d7-95e4-49e7-91ff-bba90a836b0a.png)
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
@@ -104,7 +105,7 @@ Los resultados son los siguientes:
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-/// \DONE 
+   /// \DONE 
 	///Localizando el primer máximo secundario de la autocorrelación
 
   for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
