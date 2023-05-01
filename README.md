@@ -16,6 +16,7 @@ Ejercicios básicos
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
 
 ```bash
+
   unsigned int l=0;
   void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
     //cálculo de la autocorrelación
@@ -47,11 +48,14 @@ Ejercicios básicos
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
 Grabamos un tono sonoro de 30 ms con wavesurfer:
+
 ![image](https://user-images.githubusercontent.com/125259801/235349037-bcd040ae-12f2-4125-b6d9-78f0be219ca2.png)
 
 Para crear las gráficas escribimos el siguiente código de MATLAB:
+
 ```bash
 %Gráficas
+
 [audio,Fs] = audioread('fonema_sonoro_30ms.wav');
 t = seconds(0:1/Fs:(size(audio,1)-1)/Fs);
 
@@ -86,6 +90,7 @@ Los resultados son los siguientes:
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+     
 ```bash
     //Compute correlation
     autocorrelation(x, r);
