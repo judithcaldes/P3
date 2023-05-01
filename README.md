@@ -99,7 +99,8 @@ Los resultados son los siguientes:
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-/// \DONE localizando el primer máximo secundario de la autocorrelación
+/// \DONE 
+	///Localizando el primer máximo secundario de la autocorrelación
 
   for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
     if(*iR >*iRMax){
@@ -111,6 +112,7 @@ Los resultados son los siguientes:
 ```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+   
 ```bash
 bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
@@ -182,6 +184,7 @@ Ejercicios de ampliación
   * Técnicas de preprocesado: filtrado paso bajo, diezmado, *center clipping*, etc.
   
 Hemos utilizado la técnica de Center Clipping utilizando como referencia la siguiente web: http://notedetection.weebly.com/center-clipping.html
+
 ```bash
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For
