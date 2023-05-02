@@ -55,13 +55,9 @@ int main(int argc, const char *argv[]) {
         std::string input_wav = args["<input-wav>"].asString();
 
         std::string output_txt = args["<output-txt>"].asString();
-cout<<"aqui\n";
-cout<<args["--u_pot"];
-cout<<"aqui\n";
-  
-cout<<"aqui\n";
+
   float u_r1 = std::stof(args["--u_r1"].asString());
-cout<<"aqui\n";
+
   float u_rmax = std::stof(args["--u_rmax"].asString());
   float u_pot = std::stof(args["--u_pot"].asString());
  
@@ -149,19 +145,13 @@ cout<<"aqui\n";
       window.push_back(f0[j]);
       
     }
-    for (unsigned int i = 0; i<window.size(); i++){
-      cout<<window[i]<<'\t';
-    }
-    cout<<'\n';
+    
     // Ordenamos la ventana
     std::sort(window.begin(), window.end());
-    for (unsigned int i = 0; i<window.size(); i++){
-      cout<<window[i]<<'\t';
-    }
-    cout<<'\n';
+    
+    
     // Tomamos el valor central de la ventana como valor filtrado
     f0_filtered[i] = window[MEDIAN_WINDOW/2];
-    cout<<f0[i]<<'\t'<<f0_filtered[i]<<'\n';
     
   }
 
