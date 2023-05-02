@@ -233,32 +233,31 @@ Hemos utilizado el filtro de mediana:
   /// \DONE Hemos utilizado el filtro de mediana
 
   // Definimos el tamaño de la ventana de filtrado
-  const int MEDIAN_WINDOW = 6; //Utilizamos 6 pero habrán 7 números dentro de la ventana
+  const int MEDIAN_WINDOW = 4; //Utilizamos 6 pero habrán 7 números dentro de la ventana
 
   // Creamos un vector temporal para almacenar los valores filtrados
-  vector<float> f0_filtered(f0.size());
+  vector<float> f0_filtered(f0);
 
   // Aplicamos el filtro de mediana a cada valor de f0
-  for (int i = 0; i < f0.size(); i++) {
+  for (long unsigned int i = MEDIAN_WINDOW/2; i < f0.size() - MEDIAN_WINDOW/2; i++) {
     // Creamos un vector temporal con los valores a filtrar
     vector<float> window;
 
     // Agregamos los valores a la ventana
-    for (int j = i - MEDIAN_WINDOW/2; j <= i + MEDIAN_WINDOW/2; j++) {
-      // Ignoramos los valores fuera del rango del vector
-      if (j < 0 || j >= f0.size()) {
-        continue;
-      }
-
+    for (long unsigned int j = i - MEDIAN_WINDOW/2 ; j <= i + MEDIAN_WINDOW/2 ; j++) {
+      
       // Agregamos el valor a la ventana
       window.push_back(f0[j]);
+      
     }
-  
+    
     // Ordenamos la ventana
     std::sort(window.begin(), window.end());
-
+    
+    
     // Tomamos el valor central de la ventana como valor filtrado
-    f0_filtered[i] = window[round(window.size()/2)];
+    f0_filtered[i] = window[MEDIAN_WINDOW/2];
+    
   }
 
   // Sobrescribimos el vector original con los valores filtrados
