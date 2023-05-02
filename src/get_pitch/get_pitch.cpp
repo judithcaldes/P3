@@ -27,12 +27,12 @@ Usage:
     get_pitch --version
 
 Options:
+    -p, --u_pot=REAL    Umbral de potencia para la determinación de sonoro/sordo [default: -1.e6]
+    -1, --u_r1=REAL     Umbral de la autocorrelación de 1 para la determinación de sonoro/sordo [default: 0.7]
+    -m, --u_rmax=REAL   Umbral en el máximo de la autocorrelación para la determinación de sonoro/sordo [default: 0.4]
+
     -h, --help  Show this screen
     --version   Show the version of the project
-
-    -p, --u_pot=REAL   Umbral de potencia para la determinación de sonoro/sordo [default: -1e6]
-    -1, --u_r1=REAL    Umbral de la autocorrelación de 1 para la determinación de sonoro/sordo [default: 0.7]
-    -m, --u_rmax=REAL  Umbral en el máximo de la autocorrelación para la determinación de sonoro/sordo [default: 0.4]
 
 Arguments:
     input-wav   Wave file with the audio signal
@@ -52,15 +52,18 @@ int main(int argc, const char *argv[]) {
       true,                    // show help if requested
       "2.0");                  // version string
 
-  std::string input_wav = args["<input-wav>"].asString();
+        std::string input_wav = args["<input-wav>"].asString();
 
-  std::string output_txt = args["<output-txt>"].asString();
-
-  float u_pot = stof(args["--u_pot"].asString());
-
-  float u_r1 = stof(args["--u_r1"].asString());
-
-  float u_rmax = stof(args["--u_rmax"].asString());
+        std::string output_txt = args["<output-txt>"].asString();
+cout<<"aqui\n";
+cout<<args["--u_pot"];
+cout<<"aqui\n";
+  
+cout<<"aqui\n";
+  float u_r1 = std::stof(args["--u_r1"].asString());
+cout<<"aqui\n";
+  float u_rmax = std::stof(args["--u_rmax"].asString());
+  float u_pot = std::stof(args["--u_pot"].asString());
  
 
   // Class template std::function is a general-purpose polymorphic function
@@ -120,42 +123,52 @@ int main(int argc, const char *argv[]) {
     f0.push_back(f);
   }
 
+#define CUALQUIERCOSA 1
+#ifdef CUALQUIERCOSA
+
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a
   /// median filter or time-warping may be used.
   /// \DONE Hemos utilizado el filtro de mediana
 
   // Definimos el tamaño de la ventana de filtrado
-  const int MEDIAN_WINDOW = 6; //Utilizamos 6 pero habrán 7 números dentro de la ventana
+  const int MEDIAN_WINDOW = 4; //Utilizamos 6 pero habrán 7 números dentro de la ventana
 
   // Creamos un vector temporal para almacenar los valores filtrados
-  vector<float> f0_filtered(f0.size());
+  vector<float> f0_filtered(f0);
 
   // Aplicamos el filtro de mediana a cada valor de f0
-  for (long unsigned int i = 0; i < f0.size(); i++) {
+  for (long unsigned int i = MEDIAN_WINDOW/2; i < f0.size() - MEDIAN_WINDOW/2; i++) {
     // Creamos un vector temporal con los valores a filtrar
     vector<float> window;
 
     // Agregamos los valores a la ventana
-    for (long unsigned int j = i - MEDIAN_WINDOW/2; j <= i + MEDIAN_WINDOW/2; j++) {
-      // Ignoramos los valores fuera del rango del vector
-      if (j < 0 || j >= f0.size()) {
-        continue;
-      }
-
+    for (long unsigned int j = i - MEDIAN_WINDOW/2 ; j <= i + MEDIAN_WINDOW/2 ; j++) {
+      
       // Agregamos el valor a la ventana
       window.push_back(f0[j]);
+      
     }
-  
+    for (unsigned int i = 0; i<window.size(); i++){
+      cout<<window[i]<<'\t';
+    }
+    cout<<'\n';
     // Ordenamos la ventana
     std::sort(window.begin(), window.end());
-
+    for (unsigned int i = 0; i<window.size(); i++){
+      cout<<window[i]<<'\t';
+    }
+    cout<<'\n';
     // Tomamos el valor central de la ventana como valor filtrado
-    f0_filtered[i] = window[round(window.size()/2)];
+    f0_filtered[i] = window[MEDIAN_WINDOW/2];
+    cout<<f0[i]<<'\t'<<f0_filtered[i]<<'\n';
+    
   }
 
   // Sobrescribimos el vector original con los valores filtrados
   f0 = f0_filtered;
+
+  #endif
 
   // Write f0 contour into the output file
   ofstream os(output_txt);
