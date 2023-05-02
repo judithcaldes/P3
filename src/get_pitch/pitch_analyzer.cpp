@@ -40,7 +40,13 @@ namespace upc {
     switch (win_type) {
     case HAMMING:
       /// \TODO Implement the Hamming window
-      break;
+      /// \DONE Hamming window done
+      float a0 = 0.53836F;
+      float a1 = 0.46164F;
+      for (unsigned int n = 0; n < frameLen; n++){
+        window[n] = a0-a1*cos((2*M_PI*n)/(frameLen-1));
+      }
+    break;
     case RECT:
     default:
       window.assign(frameLen, 1);
@@ -71,7 +77,7 @@ namespace upc {
     /// - El valor máximo de la autocorrelación supera nuestro umbral máximo
     /// Si alguna de estas condiciones falla se trata de un sonido sordo
     
-    if(pot > this->u_pot && r1norm > this->u_r1 && rmaxnorm > this->u_max){ 
+    if(pot > -this->u_pot && r1norm > this->u_r1 && rmaxnorm > this->u_max){ 
       return false; //sonoro
     }else{
       return true; //sordo
@@ -100,21 +106,37 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-/// \DONE localizando el primer máximo secundario de la autocorrelación
+
+  /// \DONE 
+  ///Localizamos el primer máximo secundario de la autocorrelación
 
   for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
-    if(*iR >*iRMax){
+    if(*iR >*iRMax){  
       iRMax = iR;
     }
   }
-
     unsigned int lag = iRMax - r.begin();
 
     float pot = 10 * log10(r[0]);
 
-    //You can print these (and other) features, look at them using wavesurfer
+    //You can print these (and other) features, look at them using wavesusrfer
     //Based on that, implement a rule for unvoiced
     //change to #if 1 and compile
+
+/*
+if (1){
+    if (r[0] > 0.0F){
+      cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
+    } 
+}
+    
+    if (unvoiced(pot, r[1]/r[0], r[lag]/r[0])){
+      return 0;
+    }else{
+      return (float) samplingFreq/(float) lag;
+  }
+*/
+
 #if 1
     if (r[0] > 0.0F)
       cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;

@@ -16,12 +16,13 @@ Ejercicios básicos
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
 
 ```bash
+
   unsigned int l=0;
   void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
     //cálculo de la autocorrelación
 
     for (unsigned int l = 0; l < r.size(); ++l) {
-  		/// \TODO Compute the autocorrelation r[l]
+      /// \TODO Compute the autocorrelation r[l]
       /// \DONE Autocorrelación calculada
       /// - Inicializamos la autocorrelación a 0
       /// - Acumulamos los productos cruzados \f$\sum_{n=0}^{N-l} x[n]x[n+l]\f$
@@ -47,11 +48,14 @@ Ejercicios básicos
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
 Grabamos un tono sonoro de 30 ms con wavesurfer:
+
 ![image](https://user-images.githubusercontent.com/125259801/235349037-bcd040ae-12f2-4125-b6d9-78f0be219ca2.png)
 
 Para crear las gráficas escribimos el siguiente código de MATLAB:
+
 ```bash
 %Gráficas
+
 [audio,Fs] = audioread('fonema_sonoro_30ms.wav');
 t = seconds(0:1/Fs:(size(audio,1)-1)/Fs);
 
@@ -82,10 +86,12 @@ ylabel("Amplitude")
 ```
 
 Los resultados son los siguientes:
+
 ![image](https://user-images.githubusercontent.com/125259801/235349024-1f0e72d7-95e4-49e7-91ff-bba90a836b0a.png)
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+     
 ```bash
     //Compute correlation
     autocorrelation(x, r);
@@ -99,7 +105,8 @@ Los resultados son los siguientes:
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-/// \DONE localizando el primer máximo secundario de la autocorrelación
+   /// \DONE 
+	///Localizando el primer máximo secundario de la autocorrelación
 
   for (iR = iRMax = r.begin() + npitch_min; iR <= r.begin() + npitch_max; iR ++){
     if(*iR >*iRMax){
@@ -111,6 +118,7 @@ Los resultados son los siguientes:
 ```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+   
 ```bash
 bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
@@ -182,6 +190,7 @@ Ejercicios de ampliación
   * Técnicas de preprocesado: filtrado paso bajo, diezmado, *center clipping*, etc.
   
 Hemos utilizado la técnica de Center Clipping utilizando como referencia la siguiente web: http://notedetection.weebly.com/center-clipping.html
+
 ```bash
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For
