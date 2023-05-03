@@ -165,8 +165,7 @@ Primeramente, usando el código desarrollado en la práctica 1, hemos representa
 	
 Configurando los paneles con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
 		
-**Segmento Sonoro:**
-	
+**Segmento Sonoro:**	
 		 	
 - Una única ventana (15 ms):
 		
@@ -219,7 +218,7 @@ A partir de los cuales obtenemos ficheros .pot de una sola columna, la que nos i
 
 Representando, finalmente, el resultado en WaveSurfer (con rmaxnorm arriba, y r1norm en medio), obtenemos la siguiente gráfica:
 	
-<img width="1436" alt="image" src="https://user-images.githubusercontent.com/125259984/235978736-ca14e0c8-a902-472a-8354-6f260908be59.png">
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236022917-06064580-4d62-4f9b-b96a-51cc2525e2d4.png">
 
 Configurando los panenes con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
 		
@@ -227,34 +226,35 @@ Configurando los panenes con el tamaño de ventana adecuado, obtenemos las sigui
 		 	
 - Una única ventana (15 ms):
 		
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980026-bda4b0f5-74a3-4759-8232-0a436e483751.png">
-
+<img width="1437" alt="image" src="https://user-images.githubusercontent.com/125259984/236023418-794adb59-de07-4315-8c8f-49073d73645f.png">
 
 - Unas pocas ventanas (menos de 10):
 		
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980895-68312829-dd7b-487e-b9c0-2b525710f101.png">
-
+<img width="1439" alt="image" src="https://user-images.githubusercontent.com/125259984/236023770-0f3b845f-e990-4cd3-b957-01f2c29b4538.png">
 
 **Segmento Sordo:**
 		
-- Una única ventana (15 ms):
-		
-		
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980370-9ed97d87-8a7d-4069-a870-7c7b486ba114.png">
-			
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980610-f3f76390-5d89-4e1b-aed2-b14dab5b9390.png">
+- Una única ventana (15 ms):	
 
+<img width="1439" alt="image" src="https://user-images.githubusercontent.com/125259984/236023562-dc5f89f8-d121-425b-8876-8619ced2f091.png">
 
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236024082-a77781b3-8081-49ba-a12e-bcb5a285682d.png">
+		
 - Unas pocas ventanas (menos de 10):
-		
-<img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235980977-b2be5650-dfe2-4e8f-a076-d318fd089bb3.png">
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236023861-7223be18-d051-489c-a98a-a66ccea5d2b2.png">
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236023986-9eaec65a-e917-4809-9e2a-1fcacb01cc23.png">
 
 Además, para comprobar que efectivamente la potencia obtenida con el código de la práctica 1 y el de la 3 coinciden, se han representado juntas:
-		
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235981491-09a06a86-975b-475f-964a-63acd726e838.png">
-		
-Vemos como, aunque estén escalados de manera distinta (tanto temporalmente como en cantidad de decibelios), y la de la práctica 3 tenga un corte a -100 dB, ambas gráficas muestran la misma envolvente, con la misma cantidad de picos.
-		
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236021728-726db2d5-166a-4a3d-9a4c-1c06fb7d85d4.png">
+
+Vemos como, aunque estén escalados de manera distinta en cantidad de decibelios y la de la práctica 3 tenga un corte a -100 dB, ambas gráficas muestran la misma envolvente, con la misma cantidad de picos.
+
+Cabe destacar que para representar de manera correcta los valores obtenidos del código de la práctica 3 (potencia, rmaxnorm, r1norm) se ha tenido que hacer un cambio de escala para ajustarlo a la ventana usada de 15 ms. Para ello hemos tenido que cambiar en las propiedades del Data Plot el valor de *Data Spacing* de la siguiente manera:
+
+<img width="642" alt="image" src="https://user-images.githubusercontent.com/125259984/236021497-54a2ab77-70f6-42ff-9c41-717b0f72cc91.png">
 
       - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
