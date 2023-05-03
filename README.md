@@ -41,11 +41,6 @@ Ejercicios básicos
 		autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]). 
 
 		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
-		
-		Primeramente, usando el código desarrollado en la práctica 1, hemos representado la potencia y la tasa de cruces por cero (ZCR), el resultando es el siguiente, donde la ZCR es la gráfica superior, seguida de la potencia, y finalmente debajo del todo se encuentra el audio, en este caso prueba.wav:
-		
-		<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235954550-797e4888-c2b1-420e-a2d0-86f5d9da53be.png">
-
 
 	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
