@@ -57,8 +57,8 @@ namespace upc {
 					Window w=PitchAnalyzer::HAMMING,	///< Window type
 					float min_F0 = MIN_F0,		///< Pitch range should be restricted to be above this value
 					float max_F0 = MAX_F0,		///< Pitch range should be restricted to be below this value
-          float u_pot = -1e6,
-          float u_r1 = 0.7,
+          float u_pot = -60,
+          float u_r1 = 0.5,
           float u_max = 0.4
 				 )
 	{
