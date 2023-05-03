@@ -152,7 +152,7 @@ int main(int argc, const char *argv[]) {
 
 
   // Definimos el tamaño de la ventana de filtrado
-  const int MEDIAN_WINDOW = 2; //Utilizamos 6 pero habrán 7 números dentro de la ventana
+  const int MEDIAN_WINDOW = 2; //Utilizamos 2 pero habrán 3 números dentro de la ventana
 
 
   // Creamos un vector temporal para almacenar los valores filtrados
