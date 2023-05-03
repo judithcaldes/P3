@@ -189,10 +189,33 @@ Configurando los paneles con el tamaño de ventana adecuado, obtenemos las sigui
 <img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235962420-37d9284a-a29a-416b-9039-f1869a0ad4f8.png">
 
 A continuación, y volviendo al código de la práctica 3, obtenemos los datos de rmaxnorm y r1norm poniendo a 1 el siguiente if:
+
+ ``` bash
+	 #if 1
+    	if (r[0] > 0.0F)
+  	cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
+	#endif
 	
+ ```
 	
-Entonces, obtenemos un fichero de datos con rmaxnorm y r1norm mediante los siguientes comandos:
-	
+Entonces, obtenemos un fichero de datos con rmaxnorm y r1norm mediante los comandos:
+
+ ``` bash
+	get_pitch prueba.wav prueba.f0 | cut -f 1 > definitivo_potencia_p3.pot 
+ ```
+ 
+  ``` bash
+	get_pitch prueba.wav prueba.f0 | cut -f 2 > definitivo_r1_entre_r0.pot
+ ```
+ 
+  ``` bash
+	 get_pitch prueba.wav prueba.f0 | cut -f 3 > definitivo_rlag_entre_r0.pot
+ ```
+
+A partir de los cuales obtenemos ficheros .pot de una sola columna, la que nos interese en cada caso. Podemos observar su apariencia haciendo un cat:
+
+<img width="572" alt="image" src="https://user-images.githubusercontent.com/125259984/235990446-a658dc57-7179-43ba-82cb-809542252611.png">
+
 
 Representando, finalmente, el resultado en WaveSurfer (con rmaxnorm arriba, y r1norm en medio), obtenemos la siguiente gráfica:
 	
