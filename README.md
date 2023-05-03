@@ -155,41 +155,83 @@ bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
   
 		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
 		
-		Primeramente, usando el código desarrollado en la práctica 1, hemos representado la potencia y la tasa de cruces por cero (ZCR), el resultando es el siguiente, donde la ZCR es la gráfica superior, seguida de la potencia, y finalmente debajo del todo se encuentra el audio, en este caso prueba.wav:
-		
-		<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235954550-797e4888-c2b1-420e-a2d0-86f5d9da53be.png">
-	
-		Configurando los panenes con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
-		
-		**Segmento Sonoro:**
-		 	
-			- Una única ventana (15 ms):
-		
-		<img width="1431" alt="image" src="https://user-images.githubusercontent.com/125259984/235961757-02568182-90e7-49ba-b80e-2796c0912168.png">
-
-			- Unas pocas ventanas (menos de 10):
-		
-		<img width="1433" alt="image" src="https://user-images.githubusercontent.com/125259984/235962099-000beebb-6c3f-4a0d-a7cf-8e4e3f4b45fb.png">
-
-
-		**Segmento Sordo:**
-		
-			- Una única ventana (15 ms):
-		
-		<img width="1429" alt="image" src="https://user-images.githubusercontent.com/125259984/235962507-e40b3924-5920-4cfe-85b4-be0e196daf1a.png">
-
-
-			- Unas pocas ventanas (menos de 10):
-		
-		<img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235962420-37d9284a-a29a-416b-9039-f1869a0ad4f8.png">
-
-
-		
-		
-		
-		
-	   Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
+			
+	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
+		
+Primeramente, usando el código desarrollado en la práctica 1, hemos representado la potencia y la tasa de cruces por cero (ZCR), el resultando es el siguiente, donde la ZCR es la gráfica superior, seguida de la potencia, y finalmente debajo del todo se encuentra el audio, en este caso prueba.wav:
+		
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235954550-797e4888-c2b1-420e-a2d0-86f5d9da53be.png">
+	
+Configurando los paneles con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
+		
+**Segmento Sonoro:**
+	
+		 	
+- Una única ventana (15 ms):
+		
+<img width="1431" alt="image" src="https://user-images.githubusercontent.com/125259984/235961757-02568182-90e7-49ba-b80e-2796c0912168.png">
+
+- Unas pocas ventanas (menos de 10):
+		
+<img width="1433" alt="image" src="https://user-images.githubusercontent.com/125259984/235962099-000beebb-6c3f-4a0d-a7cf-8e4e3f4b45fb.png">
+
+
+**Segmento Sordo:**
+		
+- Una única ventana (15 ms):
+		
+<img width="1429" alt="image" src="https://user-images.githubusercontent.com/125259984/235962507-e40b3924-5920-4cfe-85b4-be0e196daf1a.png">
+
+
+- Unas pocas ventanas (menos de 10):
+		
+<img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235962420-37d9284a-a29a-416b-9039-f1869a0ad4f8.png">
+
+A continuación, y volviendo al código de la práctica 3, obtenemos los datos de rmaxnorm y r1norm poniendo a 1 el siguiente if:
+	
+	
+Entonces, obtenemos un fichero de datos con rmaxnorm y r1norm mediante los siguientes comandos:
+	
+
+Representando, finalmente, el resultado en WaveSurfer (con rmaxnorm arriba, y r1norm en medio), obtenemos la siguiente gráfica:
+	
+<img width="1436" alt="image" src="https://user-images.githubusercontent.com/125259984/235978736-ca14e0c8-a902-472a-8354-6f260908be59.png">
+
+Configurando los panenes con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
+		
+**Segmento Sonoro:**
+		 	
+- Una única ventana (15 ms):
+		
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980026-bda4b0f5-74a3-4759-8232-0a436e483751.png">
+
+
+- Unas pocas ventanas (menos de 10):
+		
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980895-68312829-dd7b-487e-b9c0-2b525710f101.png">
+
+
+**Segmento Sordo:**
+		
+- Una única ventana (15 ms):
+		
+		
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980370-9ed97d87-8a7d-4069-a870-7c7b486ba114.png">
+			
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235980610-f3f76390-5d89-4e1b-aed2-b14dab5b9390.png">
+
+
+- Unas pocas ventanas (menos de 10):
+		
+<img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235980977-b2be5650-dfe2-4e8f-a076-d318fd089bb3.png">
+
+Además, para comprobar que efectivamente la potencia obtenida con el código de la práctica 1 y el de la 3 coinciden, se han representado juntas:
+		
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235981491-09a06a86-975b-475f-964a-63acd726e838.png">
+		
+Vemos como, aunque estén escalados de manera distinta (tanto temporalmente como en cantidad de decibelios), y la de la práctica 3 tenga un corte a -100 dB, ambas gráficas muestran la misma envolvente, con la misma cantidad de picos.
+		
 
       - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
