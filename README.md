@@ -152,15 +152,43 @@ bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
 	    principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
 		(r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
 		autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
-
+  
 		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
 		
 		Primeramente, usando el código desarrollado en la práctica 1, hemos representado la potencia y la tasa de cruces por cero (ZCR), el resultando es el siguiente, donde la ZCR es la gráfica superior, seguida de la potencia, y finalmente debajo del todo se encuentra el audio, en este caso prueba.wav:
 		
 		<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235954550-797e4888-c2b1-420e-a2d0-86f5d9da53be.png">
+	
+		Configurando los panenes con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
+		
+		**Segmento Sonoro:**
+		 	
+			- Una única ventana (15 ms):
+		
+		<img width="1431" alt="image" src="https://user-images.githubusercontent.com/125259984/235961757-02568182-90e7-49ba-b80e-2796c0912168.png">
+
+			- Unas pocas ventanas (menos de 10):
+		
+		<img width="1433" alt="image" src="https://user-images.githubusercontent.com/125259984/235962099-000beebb-6c3f-4a0d-a7cf-8e4e3f4b45fb.png">
 
 
-	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
+		**Segmento Sordo:**
+		
+			- Una única ventana (15 ms):
+		
+		<img width="1429" alt="image" src="https://user-images.githubusercontent.com/125259984/235962507-e40b3924-5920-4cfe-85b4-be0e196daf1a.png">
+
+
+			- Unas pocas ventanas (menos de 10):
+		
+		<img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235962420-37d9284a-a29a-416b-9039-f1869a0ad4f8.png">
+
+
+		
+		
+		
+		
+	   Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
 
       - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
