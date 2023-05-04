@@ -162,6 +162,8 @@ bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
 Primeramente, usando el código desarrollado en la práctica 1, hemos representado la potencia y la tasa de cruces por cero (ZCR), el resultando es el siguiente, donde la ZCR es la gráfica superior, seguida de la potencia, y finalmente debajo del todo se encuentra el audio, en este caso prueba.wav:
 		
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/235954550-797e4888-c2b1-420e-a2d0-86f5d9da53be.png">
+
+Vemos, como ya se ha explicado en prácticas previas, que como más sonoro es un segmento más potencia tiene. Además, hemos optado por añadir también la tasa de curces por cero porque ésta es otro buen criterio decisor de si una trama es sorda o sonora: los segmentos sordos, al tener menos potencia y ser más aleatorios, tienen una mayor ZCR dada por un constante "zigzag" de potencia alrededor del 0. En la gráfica también se puede observar el comportamiento explicado, en que en los puntos donde menos potencia se observa en la gráfica de en medio, son los que mayor ZCR muestran en la gráfica superior (como se puede apreciar, por ejemplo, en el instante temporal 0.7).
 	
 Configurando los paneles con el tamaño de ventana adecuado, obtenemos las siguientes gráficas:
 		
