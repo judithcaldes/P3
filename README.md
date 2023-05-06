@@ -333,17 +333,15 @@ Para desarrollar el código hemos usado google colab, y el audio lo hemos import
 Los parámetros usados ya se han dado previamente, y el comando necesario para calcular lo que se nos pide es el siguiente:
 
 ```bash
-pitch_evaluate pitch_db/train/*.f0ref | grep TOTAL
+pitch_evaluate pitch_db/train/*.f0ref 
 ```
 Hemos obtenido el siguiente valor para la evaluación de la base de datos:
 
-<img width="899" alt="image" src="https://user-images.githubusercontent.com/125259984/236642412-a4920598-fe05-4007-93e4-94f2fbc7ae9d.png">
+<img width="530" alt="image" src="https://user-images.githubusercontent.com/125259984/236642615-b435c3a8-444b-4b3b-937c-9d6bf17fceca.png">
 
 Para nuestro audio de prueba obtenemos resultados ligeramente mejores:
 
-<img width="899" alt="image" src="https://user-images.githubusercontent.com/125259984/236642463-55b6ebdd-43b1-40b6-992a-e8fbb529f6d0.png">
-
-
+<img width="668" alt="image" src="https://user-images.githubusercontent.com/125259984/236642655-e04bb467-a8f8-4f4c-9dbe-8bd7e1c35db4.png">
 
 Ejercicios de ampliación
 ------------------------
@@ -357,6 +355,12 @@ Ejercicios de ampliación
 
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
+    
+    <img width="1198" alt="image" src="https://user-images.githubusercontent.com/125259984/236642731-afe1c88f-6a6d-495b-8d66-c493216e952a.png">
+
+Ejemplo:
+
+<img width="888" alt="image" src="https://user-images.githubusercontent.com/125259984/236642798-4e93aba9-3c1b-47dc-a401-f7e3a21332c3.png">
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de estimación
   de pitch.
