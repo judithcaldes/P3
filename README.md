@@ -370,6 +370,7 @@ Ejemplo:
   * Técnicas de preprocesado: filtrado paso bajo, diezmado, *center clipping*, etc.
   
 Hemos utilizado la técnica de Center Clipping utilizando como referencia la siguiente web: http://notedetection.weebly.com/center-clipping.html
+Al principio realizamos el código siguiendo el ejemplo de la web, es decir, teniendo en cuenta los casos en que la trama sobrepasaba el umbral 'alpha' pero al final hemos obtenido mejores resultados considerando solamente el caso del valor absoluto de la trama inferior al umbral.
 
 ```bash
   /// \TODO
@@ -383,17 +384,11 @@ Hemos utilizado la técnica de Center Clipping utilizando como referencia la sig
   vector<float> f0;
 
   float valor_max = *std::max_element(x.begin(), x.end()); //devuelve el valor de la amplitud máxima de la senyal de audio
-  float alpha = 0.03 * valor_max; //fijamos un valor de alpha a partir del valor máximo del audio
+  float alpha = 0.02 * valor_max; //fijamos un valor de alpha a partir del valor máximo del audio
 
   for (iX = x.begin(); iX < x.end(); iX++){ //Por cada trama iX se hace lo siguiente
     if(abs(*iX) < alpha){
       *iX = 0;
-    }
-    if(*iX > alpha){
-      *iX = *iX - alpha;
-    }
-    if(*iX < -alpha){
-      *iX = *iX + alpha;
     }
   }
 
@@ -413,7 +408,7 @@ Hemos utilizado el filtro de mediana:
   /// \DONE Hemos utilizado el filtro de mediana
 
   // Definimos el tamaño de la ventana de filtrado
-  const int MEDIAN_WINDOW = 4; //Utilizamos 6 pero habrán 7 números dentro de la ventana
+  const int MEDIAN_WINDOW = 2; //Utilizamos 2 pero habrán 3 números dentro de la ventana
 
   // Creamos un vector temporal para almacenar los valores filtrados
   vector<float> f0_filtered(f0);
@@ -425,19 +420,18 @@ Hemos utilizado el filtro de mediana:
 
     // Agregamos los valores a la ventana
     for (long unsigned int j = i - MEDIAN_WINDOW/2 ; j <= i + MEDIAN_WINDOW/2 ; j++) {
-      
+     
       // Agregamos el valor a la ventana
       window.push_back(f0[j]);
-      
+     
     }
-    
+
     // Ordenamos la ventana
     std::sort(window.begin(), window.end());
-    
-    
+
     // Tomamos el valor central de la ventana como valor filtrado
     f0_filtered[i] = window[MEDIAN_WINDOW/2];
-    
+   
   }
 
   // Sobrescribimos el vector original con los valores filtrados
