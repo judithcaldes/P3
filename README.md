@@ -264,14 +264,70 @@ Por último, cabe destacar que para representar de manera correcta los valores o
 
 <img width="642" alt="image" src="https://user-images.githubusercontent.com/125259984/236021497-54a2ab77-70f6-42ff-9c41-717b0f72cc91.png">
 
-      - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
-	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
-		ilustrativa del resultado de ambos estimadores.
-		
+- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica ilustrativa del resultado de ambos estimadores.
+
+Primeramente, para obtener el pitch mediante nuestro código, hemos seguido un proceso muy similar al realizado para los parámetros anteriores, pero cambiando el if para que incorporase esta salida extra:
+
+```bash
+#if 1
+    if (r[0] > 0.0F)
+      cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << '\t' << (float) samplingFreq/(float) lag << '\t' << endl;
+#endif
+```
+Entonces, hemos obtenido el fichero .pot resultante con el siguiente filtro:
+
+```bash
+get_pitch prueba.wav prueba.f0 | cut -f 4 > definitivo_pitch.pot
+```
+Podemos ver el resultado mediante un cat:
+
+<img width="639" alt="image" src="https://user-images.githubusercontent.com/125259984/236641540-cf603197-8412-4944-aeb5-e5f198f5cc1a.png">
+
+Para calcular el pitch mediante WaveSurfer, por otra parte, simplemente hemos creado un panel y aplicado la siguiente configuración:
+
+<img width="310" alt="image" src="https://user-images.githubusercontent.com/125259984/236641577-56eb9abd-0fdc-4c02-8f95-6b2d9f74bb8b.png">
+
+Obtendiendo, finalmente, el siguiente resultado:
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236641586-ad488dc3-328a-415d-8946-0ccbbb4d71ed.png">
+
+Observamos como, efectivamente, los pitch de ambas gráficas parecen coincidir. La diferencia más notoria, sin embargo, es la continuidad. Como no hemos aplicado ningun tipo de filtrado, nuestro programa calcula el pitch para absolutamente cada instante de la señal. 
      
 		Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 	 	el uso de alternativas de mayor calidad (particularmente Python).
-  
+		
+Hemos calculado el ptich también en Python, pues efectivamente los resultados de wavesurfer no nos daban tanta información como los de python, que nos han permitido representar un espectrograma mucho más preciso. El código creado ha sido el siguiente:
+
+```bash
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
+
+filename = 'prueba.wav'
+
+# Cargar el archivo de audio
+y, sr = librosa.load(filename)
+
+# Calcular el pitch
+pitch, _ = librosa.core.piptrack(y=y, sr=sr)
+
+# Graficar el pitch
+plt.figure(figsize=(15, 5))
+librosa.display.specshow(pitch, sr=sr, y_axis='linear', x_axis='time')
+plt.colorbar()
+plt.title('Pitch')
+plt.tight_layout()
+plt.show()
+```
+
+De donde hemos obtenido la siguiente gráfica de pitch para el audio prueba.wav:
+
+<img width="1317" alt="image" src="https://user-images.githubusercontent.com/125259984/236641884-e2493f82-763f-4b96-9008-544d0f6c74b2.png">
+ 
+Para desarrollar el código hemos usado google colab, y el audio lo hemos importado de la siguiente manera:
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236642156-ac04427b-8e7e-4549-893c-1ab6099271ae.png">
+
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
