@@ -237,6 +237,8 @@ Configurando los panenes con el tamaño de ventana adecuado, obtenemos las sigui
 <img width="1439" alt="image" src="https://user-images.githubusercontent.com/125259984/236023770-0f3b845f-e990-4cd3-b957-01f2c29b4538.png">
 
 **Segmento Sordo:**
+
+Hemos elegido dos para tener una mejor referencia:
 		
 - Una única ventana (15 ms):	
 
