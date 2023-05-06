@@ -189,6 +189,8 @@ Configurando los paneles con el tamaño de ventana adecuado, obtenemos las sigui
 		
 <img width="1435" alt="image" src="https://user-images.githubusercontent.com/125259984/235962420-37d9284a-a29a-416b-9039-f1869a0ad4f8.png">
 
+Como se puede observar, hemos obtenido unos -20 dB de potencia y un ZCR de alrededor de 0.5 en el caso de un sonido sonoro. En el caso sordo, sin embargo, la potencia obtenida ronda los -40 dB, y el ZCR es de 8. Es por ello que un buen umbral de potencia sería -30 dB, y de ZCR  4.25 (obtenidos en cada caso haciendo la media entre ambos valores). Para el conjunto de señales de training, sin embargo, hemos cogido un valor distino como umbral de potencia, pues nos daba mejores resultados (el umbral calculado ahora es el óptimo únicamente para la señal analizada, en los tramos concretos escogidos, y usando el algoritmo de cálculo de potencia de la práctica 1). Hemos elegido un umbral de -60 dB de potencia, como se puede observar en la figura de más adelante.
+
 A continuación, y volviendo al código de la práctica 3, obtenemos los datos de rmaxnorm y r1norm poniendo a 1 el siguiente if:
 
  ``` bash
@@ -254,13 +256,18 @@ Además, para comprobar que efectivamente la potencia obtenida con el código de
 
 Vemos como, aunque estén escalados de manera distinta en cantidad de decibelios y la de la práctica 3 tenga un corte a -100 dB, ambas gráficas muestran la misma envolvente, con la misma cantidad de picos.
 
-Cabe destacar que para representar de manera correcta los valores obtenidos del código de la práctica 3 (potencia, rmaxnorm, r1norm) se ha tenido que hacer un cambio de escala para ajustarlo a la ventana usada de 15 ms. Para ello hemos tenido que cambiar en las propiedades del Data Plot el valor de *Data Spacing* de la siguiente manera:
+Como se puede observar, hemos obtenido en el caso de un sonido sonoro rmaxnorm de aproximadamente 0.85, y un r1norm de prácticamente 1. En el caso sordo, sin embargo, observamos un rmaxnorm de alrededor de 0.15, y un r1norm de aproximadamente 0.75. Es por ello que un buen umbral de rmaxnorm sería 0.5, y de r1norm 0.875 (obtenidos en cada caso haciendo la media entre ambos valores). Nuevamente, para el conjunto de señales de training hemos cogido unos valores distinos, pues nos daban mejores resultados. Hemos elegido los siguientes parámetros:
+
+<img width="892" alt="image" src="https://user-images.githubusercontent.com/125259984/236640651-87650f2d-b9ac-4f0b-ae83-6eb73274af92.png">
+
+Por último, cabe destacar que para representar de manera correcta los valores obtenidos del código de la práctica 3 (potencia, rmaxnorm, r1norm) se ha tenido que hacer un cambio de escala para ajustarlo a la ventana usada de 15 ms. Para ello hemos tenido que cambiar en las propiedades del Data Plot el valor de *Data Spacing* de la siguiente manera:
 
 <img width="642" alt="image" src="https://user-images.githubusercontent.com/125259984/236021497-54a2ab77-70f6-42ff-9c41-717b0f72cc91.png">
 
       - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 		ilustrativa del resultado de ambos estimadores.
+		
      
 		Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 	 	el uso de alternativas de mayor calidad (particularmente Python).
