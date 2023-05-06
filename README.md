@@ -293,8 +293,7 @@ Obtendiendo, finalmente, el siguiente resultado:
 
 Observamos como, efectivamente, los pitch de ambas gráficas parecen coincidir. La diferencia más notoria, sin embargo, es la continuidad. Como no hemos aplicado ningun tipo de filtrado, nuestro programa calcula el pitch para absolutamente cada instante de la señal. 
      
-		Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
-	 	el uso de alternativas de mayor calidad (particularmente Python).
+Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará el uso de alternativas de mayor calidad (particularmente Python).
 		
 Hemos calculado el ptich también en Python, pues efectivamente los resultados de wavesurfer no nos daban tanta información como los de python, que nos han permitido representar un espectrograma mucho más preciso. El código creado ha sido el siguiente:
 
@@ -328,9 +327,23 @@ Para desarrollar el código hemos usado google colab, y el audio lo hemos import
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/125259984/236642156-ac04427b-8e7e-4549-893c-1ab6099271ae.png">
 
-  * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
-    y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
+  * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
+	
+Los parámetros usados ya se han dado previamente, y el comando necesario para calcular lo que se nos pide es el siguiente:
+
+```bash
+pitch_evaluate pitch_db/train/*.f0ref | grep TOTAL
+```
+Hemos obtenido el siguiente valor para la evaluación de la base de datos:
+
+<img width="899" alt="image" src="https://user-images.githubusercontent.com/125259984/236642412-a4920598-fe05-4007-93e4-94f2fbc7ae9d.png">
+
+Para nuestro audio de prueba obtenemos resultados ligeramente mejores:
+
+<img width="899" alt="image" src="https://user-images.githubusercontent.com/125259984/236642463-55b6ebdd-43b1-40b6-992a-e8fbb529f6d0.png">
+
+
 
 Ejercicios de ampliación
 ------------------------
